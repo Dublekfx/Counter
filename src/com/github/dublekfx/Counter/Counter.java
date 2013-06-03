@@ -17,23 +17,28 @@ public class Counter extends JavaPlugin {
 	}
 	@Override
 	public void onDisable()	{
-		
+		task.cancel();
 	}
 	
 	public boolean onCommand (CommandSender sender, Command cmd, String label, String[] args)	{
-		
-		
+		Player pTarget;
+		int duration;
+		if (cmd.getName().equalsIgnoreCase("counter"))	{
+			if ((sender instanceof Player && sender.hasPermission("counter.set")) || !(sender instanceof Player) )	{
+				if(args.length == 2)	{
+					pTarget = getServer().getPlayer(args[0]);
+					duration = Integer.parseInt(args[1]);
+					this.startCounter(pTarget, duration);
+				}
+			}
+		}
 		return false;		
 	}
 	
 	public void startCounter(Player p, int tStart)	{
 		playerLevel = p.getLevel();
 		p.setLevel(tStart);
-		task = new CounterClock(this, p, playerLevel).runTaskTimer(this, 20, 20);
-		
-	}
-	public void endCounter(Player p, int l)	{
-		
+		task = new CounterClock(this, p, playerLevel, false).runTaskLater(this, 20);
 	}
 
 }
