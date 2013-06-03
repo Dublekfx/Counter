@@ -1,0 +1,13 @@
+name: Counter
+main: com.github.dublekfx.Counter.Counter
+version: 1.0
+commands:
+  counter:
+    description: Start an XP Level counter
+    usage: /counter <player> <time>
+    permission: counter.set
+    permission-message: A voice whispers "You need counter.set"...
+permissions:
+  counter.set:
+    description: Allows user to create counters
+    default: op
